@@ -72,37 +72,9 @@ def get_rating(movie_id, user_id):
     return db.ratings.find_one({"movie_id": movie_id, "user_id": user_id})['rating']
 
 def predict(movie_id):
-    ratings = get_ratings(movie_id=movie_id)
-    target_movie = get_movie(movie_id)
-
-    rating_dict = defaultdict(dict)
-    # We have to reconstruct our movie dictionaries to use pearson directly
-    user_rated = get_ratings(user_id=0)
-
-    user_rated_ids = [ m['movie_id'] for m in user_rated ]
-    more_ratings = get_ratings(movie_id={"$in": user_rated_ids})
-    ratings.extend(more_ratings)
-
-    for r in ratings:
-        m_id = r['movie_id']
-        u_id = r['user_id']
-        rating_dict[m_id][u_id] = r['rating']
-    
-    similarities = [ (pearson(rating_dict, movie_id, rating['movie_id']), rating['rating']) for rating in user_rated ]
-    top_five = sorted(similarities)
-    top_five.reverse()
-    top_five = top_five[:5]
-    num = 0.0
-    den = 0.0
-    # Use a weighted mean rather than a strict top similarity
-    for sim, rating in top_five:
-        num += (float(sim) * rating)
-        den += sim
-
-    rating = num/den
-
-    print "Best guess for movie %d: %s is %.2f stars"%\
-            (movie_id, target_movie['title'], rating)
+    pass
+    #print "Best guess for movie %d: %s is %.2f stars"%\
+    #        (movie_id, target_movie['title'], rating)
 
 
 def parse(line, dispatch):
