@@ -1,0 +1,96 @@
+Movie Ratings: Stage 1
+=======
+
+Introduction
+-------
+We're going to build a movie rating application in a series of stages to
+illustrate the full process of building an app from scratch. It might not be
+obvious how we're going to get from 'hello world' in the command line, to a
+movie recommendation system on the web, but we'll try anyway and figure it out.
+
+Research has shown that having more data is always better than having a clever
+algorithm. The classical example is how to write software that can answer
+natural-language questions. To answer "who shot Abraham Lincoln?" we could try
+to employ NLP techniques to parse out that our subject is 'Abraham Lincoln',
+and someone shot him. We could then use the same techniques to try to
+understand the semantics of data found in web pages about Abraham Lincoln to
+determine who shot him.
+
+It turns out that a much easier, and much more reliable technique, is to simply
+find all texts that match the pattern "____ shot Abraham Lincoln". Sometimes
+you will get spurious results, but if the vast majority of matches say "John
+Wilkes Booth shot Abraham Lincoln", with a large enough dataset you can say
+definitively that it was John Wilkes Booth.
+
+In the same vein, rather than come up with a clever way to predict a person's
+movie rating based on tastes, time of year, and so forth, we're instead going
+to basically calculate how similar all the movies we know about are to each
+other (based on how they're rated by existing uses). Then, we'll use that
+movie's similarity to one you've already rated to predict your rating.
+
+Before we can do that though, we need to figure out how to manipulate our seed
+data set.
+
+
+Description
+-------
+Included with this project is a directory, ml-100k, which contains 100,000
+ratings of movies from 1,000 users representing a cross-section of the
+population. You will need to figure out how to read in that data from the files
+provided. Included with the files is a README describing how the data is
+organized in the files.
+
+Unlike all our previous tasks, this project is open ended: you will not have a
+template to work from. You'll have to use everything you've learned up until
+now and apply those techniques to build up your app.
+
+For the first stage, you are implement an application that provides a command
+line that behaves as such:
+
+    > movie_details 42
+    Movie 42: Clerks (1994)
+    Comedy
+
+    > average_movie_rating 42
+    3.5
+
+    > get_user 845
+    Male doctor, age 64
+
+    > user_rating 42 845
+    User 845 rated movie 42 at 5 stars
+
+    > rate 42 3
+    You have rated movie 42: Clerks (1994) at 3 stars
+
+    > predict 1
+    Best guess for movie 1: Toy Story (1995) is 4.5 stars
+
+To do this, you'll need to be able to open several files provided by the
+ml-100k dataset: u.user, u.data, u.item, and u.genre.
+
+How you accomplish that is up to you. As general hints to start you off, you
+will need to employ the use of several dictionaries and possibly some classes
+to make this work. Having a Movie class and a User class seems likely.
+
+If you're really stuck on how to start, try writing a function as follows:
+
+    def movie_details(movie_id):
+        """Returns a string containing the movie details for the movie with the
+        given id. The format of the output string is as follows:
+
+        Movie id: Movie Name
+        Genres, Separated, By, Commas
+        """
+
+To make this work, you will first need to figure out how to load the data from
+files beforehand. Similarly, you'll probably need a rate function, a predict function,
+get_user, etc.
+
+Practice incremental development. If you can't see the solution, just write a
+single line of code that moves you even vaguely in the direction you're trying
+to go.
+
+In the file correlation.py, you will find the code for a 'pearson similarity',
+which tells you how similar two items are to each other, based on the ratings
+common between them. See if you can figure out how to use this.
